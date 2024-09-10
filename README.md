@@ -1,2 +1,2 @@
 # EVEfrontend
-EVE frontend group project for Excell
+EVE frontend group project for Excel
