@@ -1,23 +1,9 @@
 .App {
   font-family: Arial, sans-serif;
-  padding: 20px;
-}
-
-.modal-body {
-  padding: 20px;
-}
-
-.modal-title {
-  font-size: 1.5rem;
 }
 
 .upload-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   border: 2px dashed #007bff;
-  padding: 20px;
-  border-radius: 8px;
   transition: background-color 0.3s;
 }
 
@@ -25,23 +11,3 @@
   background-color: #f0f8ff;
 }
 
-.btn {
-  border: none;
-  padding: 10px 20px;
-  font-size: 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.icon-text {
-  margin-top: 5px;
-  font-size: 1rem;
-}
-
-.modal-footer {
-  justify-content: space-between;
-}
-
-.modal-footer .btn {
-  width: 45%;
-}

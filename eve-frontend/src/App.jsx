@@ -66,7 +66,7 @@ function App() {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="excelImportPopUpLabel">
+              <h5 className="modal-title fs-4" id="excelImportPopUpLabel">
                 Import Excel Form
               </h5>
               <button
@@ -77,16 +77,16 @@ function App() {
                 onClick={handleClose}
               ></button>
             </div>
-            <div className="modal-body">
+            <div className="modal-body p-4">
               <h2 className="mb-3" style={{ fontWeight: "bold" }}>
                 Import excel form
               </h2>
               <p>Click the button below to upload an Excel file</p>
-              <div className="upload-section">
+              <div className="upload-section d-flex justify-content-center align-items-center p-4 rounded">
                 <div className="text-center">
                   <button type="button" className="btn" onClick={triggerFileInput}>
                     <i className="fa-solid fa-upload"></i>
-                    <p className="icon-text">{selectedFileName || "Select Excel File"}</p>
+                    <p className="icon-text m-t-5 fs-6">{selectedFileName || "Select Excel File"}</p>
                   </button>
 
                   <input
@@ -99,16 +99,16 @@ function App() {
                 </div>
               </div>
             </div>
-            <div className="modal-footer">
+            <div className="modal-footer justify-content-between">
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-secondary flex-grow-1"
                 onClick={handleClose}
               >
                 Close
               </button>
 
-              <button type="button" className="btn btn-primary" onClick={uploadFile}>
+              <button type="button" className="btn btn-primary flex-grow-1" onClick={uploadFile}>
                 Upload
               </button>
             </div>
