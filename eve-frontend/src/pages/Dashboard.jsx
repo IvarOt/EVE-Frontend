@@ -5,61 +5,59 @@ import UploadExcelPopup from '../components/UploadExcelPopup';
 
 function Dashboard() {
   return (
-    <div>
-      <main className="container">
-        <div className="row">
-          <div className="col-md-12">
-            <div className="card mb-3">
-              <div className="card-body">
-                <div className="mb-4 d-flex align-items-center">
-                  <input
-                    type="text"
-                    className="form-control me-2"
-                    placeholder="Search for file..."
-                  />
-                  <div className='d-flex align-items-center'>
-                    <UploadExcelPopup />
-                    <button className="btn btn-danger">
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                  </div>
-                </div>
-                <div className='d-flex mb-2'>
-                  <div className='d-flex flex-grow-1 align-items-center'>
-                    <p className='mb-0 me-1'>File Name</p>
-                    <FontAwesomeIcon icon={faSortAlphaAsc} />
-                  </div>
-                  <div className='d-flex flex-column align-items-center me-4'>
-                    <div className='d-flex align-items-center'>
-                      <p className='mb-0 me-1'>Updated At</p>
-                      <FontAwesomeIcon icon={faSortNumericAsc} className='ms-2' />
-                    </div>
-                  </div>
-                </div>
-                <ul className="list-group">
-                  <li className="list-group-item d-flex justify-content-between align-items-center">
-                    <div className="d-flex flex-grow-1 align-items-center">
-                      <input type="checkbox" className="me-2" />
-                      <p className='mb-0'>File1.txt</p>
-                    </div>
-                    <div className="vr mx-3"></div>
-                    <div className='d-flex flex-column align-items-end mx-3'>
-                      <p className='mb-0 me-3'>30-9-2024</p>
-                    </div>
-                    <div className="vr mx-3"></div>
-                    <div>
-                      <button className="btn btn-primary btn-sm">
-                        <FontAwesomeIcon icon={faPenToSquare} />
-                      </button>
-                    </div>
-                  </li>
-                </ul>
+    <main className="container">
+      <div className="card mb-3">
+        <div className="card-body">
+          <div className="mb-4 d-flex flex-column">
+            <div className='d-flex flex-row mb-4'>
+              <input
+                type="text"
+                className="form-control me-2"
+                placeholder="Search for file..."
+              />
+              <div className='d-flex align-items-center'>
+                <UploadExcelPopup />
+                <button className="btn btn-danger">
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
               </div>
             </div>
+            <table className="table table-auto table-hover align-middle">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">File Name</th>
+                  <th scope="col">Last Updated</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody className='table-group-divider'>
+                <tr>
+                  <td><input type="checkbox" className="me-2" /> </td>
+                  <td>File 1</td>
+                  <td >30-9-2024</td>
+                  <td className='d-flex justify-content-end'>
+                    <button className="btn btn-primary btn-sm">
+                      <FontAwesomeIcon icon={faPenToSquare} />
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" className="me-2" /> </td>
+                  <td>File 2</td>
+                  <td >30-9-2024</td>
+                  <td className='d-flex justify-content-end'>
+                    <button className="btn btn-primary btn-sm">
+                      <FontAwesomeIcon icon={faPenToSquare} />
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }
 
