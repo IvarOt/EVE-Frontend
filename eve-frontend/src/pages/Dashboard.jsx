@@ -1,5 +1,4 @@
 import React from 'react';
-import App from '../App';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrash, faSortAlphaAsc, faSortNumericAsc } from '@fortawesome/free-solid-svg-icons';
 import UploadExcelPopup from '../components/UploadExcelPopup';
@@ -25,25 +24,29 @@ function Dashboard() {
                     </button>
                   </div>
                 </div>
-                <div className='d-flex flex-direction-row mb-2'>
+                <div className='d-flex mb-2'>
                   <div className='d-flex flex-grow-1 align-items-center'>
                     <p className='mb-0 me-1'>File Name</p>
                     <FontAwesomeIcon icon={faSortAlphaAsc} />
                   </div>
-                  <div className='d-flex flex-direction-column align-items-center'>
-                    <p className='mb-0'>Updated At</p>
-                  <FontAwesomeIcon icon={faSortNumericAsc} className='ms-2' />
+                  <div className='d-flex flex-column align-items-center me-4'>
+                    <div className='d-flex align-items-center'>
+                      <p className='mb-0 me-1'>Updated At</p>
+                      <FontAwesomeIcon icon={faSortNumericAsc} className='ms-2' />
+                    </div>
                   </div>
                 </div>
                 <ul className="list-group">
-                <li className="list-group-item d-flex justify-content-between align-items-center">
+                  <li className="list-group-item d-flex justify-content-between align-items-center">
                     <div className="d-flex flex-grow-1 align-items-center">
                       <input type="checkbox" className="me-2" />
                       <p className='mb-0'>File1.txt</p>
                     </div>
-                    <div className='d-flex flex-column align-items-end'>
+                    <div className="vr mx-3"></div>
+                    <div className='d-flex flex-column align-items-end mx-3'>
                       <p className='mb-0 me-3'>30-9-2024</p>
                     </div>
+                    <div className="vr mx-3"></div>
                     <div>
                       <button className="btn btn-primary btn-sm">
                         <FontAwesomeIcon icon={faPenToSquare} />

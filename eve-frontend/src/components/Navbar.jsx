@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
     return (
-        <nav className="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-black box-shadow mb-3">
+        <nav className="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-primary box-shadow mb-3">
       <div className="container-fluid">
         <a className="navbar-brand" href="/" style={{ color: 'white' }}>
         <FontAwesomeIcon icon={faHome} />
