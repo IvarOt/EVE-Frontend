@@ -25,9 +25,9 @@ function Dashboard() {
             <table className="table table-auto table-hover align-middle">
               <thead>
                 <tr>
-                  <th scope="col"></th>
-                  <th scope="col">File Name</th>
-                  <th scope="col">Last Updated</th>
+                  <th scope="col"> <input type="checkbox" className="me-2" /></th>
+                  <th scope="col">File Name <FontAwesomeIcon icon={faSortAlphaAsc}/></th>
+                  <th scope="col">Last Updated <FontAwesomeIcon icon={faSortNumericAsc}/></th>
                   <th scope="col"></th>
                 </tr>
               </thead>
