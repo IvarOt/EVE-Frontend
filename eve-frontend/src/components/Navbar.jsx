@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 
 function Navbar() {
     return (
@@ -8,6 +9,9 @@ function Navbar() {
       <div className="container-fluid">
         <a className="navbar-brand" href="/" style={{ color: 'white' }}>
         <FontAwesomeIcon icon={faHome} />
+        </a>
+        <a className="navbar-brand" href="/editpage" style={{ color: 'white' }}>
+        <FontAwesomeIcon icon={faPenToSquare} />
         </a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
           aria-expanded="false" aria-label="Toggle navigation">
