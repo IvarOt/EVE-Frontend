@@ -40,13 +40,30 @@ function UploadExcelPopup() {
     fileInputRef.current.click();
   };
 
-  const uploadFile = () => {
+  const uploadFile = async () => {
     if (selectedFile) {
-      console.log("Uploading file:", selectedFile);
-      handleClose();
-      setTimeout(() => {
-        alert("File successfully uploaded");
-      }, 300);
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+
+      try {
+        const response = await fetch("https://localhost:7213/api/Excel", {
+          method: "POST",
+          body: formData
+        });
+
+        if (response.ok) {
+          console.log("File uploaded successfully");
+          handleClose();
+          setTimeout(() => {
+            alert("File successfully uploaded");
+          }, 300);
+        } else {
+          alert("File upload failed");
+        }
+      } catch (error) {
+        console.error("Error uploading file:", error);
+        alert("An error occurred while uploading the file");
+      }
     } else {
       alert("No file selected for upload");
     }
