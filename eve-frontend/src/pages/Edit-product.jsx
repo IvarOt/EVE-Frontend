@@ -136,7 +136,7 @@ function Editpage() {
                 placeholder="Page"
               />
               <button className="btn btn-primary me-2" onClick={handleGoToPage}>Go</button>
-              <button className="btn btn-primary" onClick={handleSave}>Save</button>
+              <button className="btn btn-success" onClick={handleSave}>Save</button>
             </div>
           </div>
         </div>
