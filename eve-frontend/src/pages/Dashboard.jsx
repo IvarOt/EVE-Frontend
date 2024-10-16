@@ -66,7 +66,7 @@ function Dashboard() {
     } catch (error) {
       console.error('Error fetching files', error);
     } finally {
-      setLoading(false); // Set loading to false after fetching
+      setLoading(false);
     }
   };
 
