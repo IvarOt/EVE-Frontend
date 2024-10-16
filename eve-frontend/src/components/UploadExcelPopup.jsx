@@ -1,18 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { api } from '../API/api';
 
-function UploadExcelPopup() {
+function UploadExcelPopup({ onFileUploaded }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState("");
   const fileInputRef = useRef(null);
-
   const modalRef = useRef(null);
 
   useEffect(() => {
     const modalElement = document.getElementById("excelImportPopUp");
     modalRef.current = new window.bootstrap.Modal(modalElement);
-
     return () => {
       modalRef.current = null;
     };
@@ -46,17 +45,12 @@ function UploadExcelPopup() {
       formData.append("file", selectedFile);
 
       try {
-        const response = await fetch("https://localhost:7213/api/Excel", {
-          method: "POST",
-          body: formData
-        });
-
+        const response = await api.uploadFile(formData);
         if (response.ok) {
           console.log("File uploaded successfully");
           handleClose();
-          setTimeout(() => {
-            alert("File successfully uploaded");
-          }, 300);
+          alert("File successfully uploaded");
+          onFileUploaded();
         } else {
           alert("File upload failed");
         }
