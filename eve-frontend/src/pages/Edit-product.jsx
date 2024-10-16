@@ -1,32 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { api } from '../API/api';
 
 function Editpage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [inputPage, setInputPage] = useState('');
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const itemsPerPage = 1;
+  const excelId = 27;
 
-  const data = [
-    [
-      { label: 'Nome prodotto', placeholder: 'Voorbeeld 1' },
-      { label: 'Beschrijving', placeholder: 'Voorbeeld 2' },
-      { label: 'Prijs', placeholder: 'Voorbeeld 3' },
-    ],
-    [
-      { label: 'Nome prodotto 2', placeholder: 'Voorbeeld 4' },
-      { label: 'Beschrijving 2', placeholder: 'Voorbeeld 5' },
-      { label: 'Prijs 2', placeholder: 'Voorbeeld 6' },
-      { label: 'Nome prodotto 2', placeholder: 'Voorbeeld 4' },
-      { label: 'Beschrijving 2', placeholder: 'Voorbeeld 5' },
-      { label: 'Prijs 2', placeholder: 'Voorbeeld 6' },
-      { label: 'Nome prodotto 2', placeholder: 'Voorbeeld 4' },
-      { label: 'Beschrijving 2', placeholder: 'Voorbeeld 5' },
-      { label: 'Prijs 2', placeholder: 'Voorbeeld 6' },
-      { label: 'Nome prodotto 2', placeholder: 'Voorbeeld 4' },
-      { label: 'Beschrijving 2', placeholder: 'Voorbeeld 5' },
-      { label: 'Prijs 2', placeholder: 'Voorbeeld 6' },
+  const fetchObjectsWithProperties = async () => {
+    setLoading(true);
+    try {
+      const response = await api.get(`Excel/${excelId}`, 'Object');
+      const objects = await response.json();
 
-    ],
-  ];
+      setData(objects);
+    } catch (error) {
+      console.error('Error fetching objects:', error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchObjectsWithProperties();
+  }, []);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -81,20 +79,28 @@ function Editpage() {
       <main className="container flex-fill">
         <div className="card mb-3">
           <div className="card-body overflow-auto" style={{ maxHeight: '75vh', minHeight: '75vh' }}>
-            {currentItems.map((formFields, cardIndex) => (
-              <div key={cardIndex}>
-                {formFields.map((field, index) => (
-                  <div className="mb-4" key={index}>
-                    <label className="form-label">{field.label}</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder={field.placeholder}
-                    />
+            {/* Loading state or data display */}
+            {loading ? (
+              <div>Loading...</div>
+            ) : (
+              currentItems.map((object, cardIndex) => (
+                <div key={cardIndex} className="mb-4">
+                  <div className="card-body">
+                    {object.excelProperties.map((property, index) => (
+                      <div className="mb-3" key={index}>
+                        <label className="form-label">{property.name}</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={property.value} // De waarde van de eigenschap wordt getoond
+                          readOnly
+                        />
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            ))}
+                </div>
+              ))
+            )}
           </div>
         </div>
       </main>
@@ -103,7 +109,7 @@ function Editpage() {
         <div className="container-fluid d-flex flex-column align-items-center">
           <div className="d-flex justify-content-between align-items-center mb-3">
             <div className="me-3">
-                Total {data.length} products
+              Total {data.length} products
             </div>
             <nav>
               <ul className="pagination mb-0">
