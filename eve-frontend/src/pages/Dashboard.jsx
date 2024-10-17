@@ -4,6 +4,7 @@ import { faTrash, faSortAlphaAsc, faSortNumericAsc, faEllipsisVertical } from '@
 import UploadExcelPopup from '../components/UploadExcelPopup';
 import { api } from '../API/api';
 
+
 function Dashboard() {
   const [dropdownOpen, setDropdownOpen] = useState(null);
   const [files, setFiles] = useState([]);
@@ -48,7 +49,7 @@ function Dashboard() {
   };
 
   const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    if (dropdownRefs.current.some(ref => ref && !ref.contains(event.target))) {
       setDropdownOpen(null);
     }
   };
