@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faSortAlphaAsc, faSortNumericAsc, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import UploadExcelPopup from '../components/UploadExcelPopup';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Zorg ervoor dat Bootstrap is geïmporteerd
 
 function Dashboard() {
   const [dropdownOpen, setDropdownOpen] = useState(null);
@@ -48,7 +49,7 @@ function Dashboard() {
   };
 
   const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    if (dropdownRefs.current.some(ref => ref && !ref.contains(event.target))) {
       setDropdownOpen(null);
     }
   };
