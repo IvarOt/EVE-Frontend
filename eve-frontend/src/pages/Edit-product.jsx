@@ -7,12 +7,12 @@ function Editpage() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const itemsPerPage = 1;
-  const excelId = 27;
+  const excelId = 46;
 
   const fetchObjectsWithProperties = async () => {
     setLoading(true);
     try {
-      const response = await api.get(`Excel/${excelId}`, 'Object');
+      const response = await api.get(`${excelId}/Object`);
       const objects = await response.json();
 
       setData(objects);
@@ -92,7 +92,7 @@ function Editpage() {
                         <input
                           type="text"
                           className="form-control"
-                          value={property.value} // De waarde van de eigenschap wordt getoond
+                          value={property.value}
                           readOnly
                         />
                       </div>
