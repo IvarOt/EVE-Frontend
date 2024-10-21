@@ -1,34 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import { api } from '../API/api';
+import { getProperties, updateProperty } from '../Services/PropertyService';
+import { useLocation } from 'react-router-dom';
+import { getProducts } from '../Services/ProductService';
 
 function Editpage() {
+  const location = useLocation();
+  const data = location.state || {};
+  const { product, file } = data;
+  const [products, setProducts] = useState([]);
+  const [properties, setProperties] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [inputPage, setInputPage] = useState('');
-  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const itemsPerPage = 1;
-  const excelId = 46;
 
   const fetchObjectsWithProperties = async () => {
     setLoading(true);
-    try {
-      const response = await api.get(`${excelId}/Object`);
-      const objects = await response.json();
-
-      setData(objects);
-    } catch (error) {
-      console.error('Error fetching objects:', error);
-    }
+      const propertiesData = await getProperties(product.id);
+      setProperties(propertiesData);
     setLoading(false);
   };
 
+  const handleInputChange = (index, event) => {
+    const newProperties = [...properties];
+    newProperties[index].value = event.target.value;
+    setProperties(newProperties); 
+  };
+
   useEffect(() => {
+    const retreiveProducts = async () => {
+      const productsData = await getProducts(file.id);
+      setProducts(productsData);
+    }
+    retreiveProducts();
     fetchObjectsWithProperties();
   }, []);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
@@ -70,8 +80,12 @@ function Editpage() {
     }
   };
 
-  const handleSave = () => {
-    alert('Changes saved!');
+  const handleSave = async () => {
+    const updatePromises = properties.map(property => 
+      updateProperty(product.id, property.id, property.value)
+    );
+    
+    await Promise.all(updatePromises);
   };
 
   return (
@@ -83,20 +97,18 @@ function Editpage() {
             {loading ? (
               <div>Loading...</div>
             ) : (
-              currentItems.map((object, cardIndex) => (
-                <div key={cardIndex} className="mb-4">
+              properties.map((property, index) => (
+                <div key={index}>
                   <div className="card-body">
-                    {object.excelProperties.map((property, index) => (
-                      <div className="mb-3" key={index}>
+                      <div key={index}>
                         <label className="form-label">{property.name}</label>
                         <input
                           type="text"
                           className="form-control"
                           value={property.value}
-                          readOnly
+                          onChange={(e) => handleInputChange(index, e)}
                         />
                       </div>
-                    ))}
                   </div>
                 </div>
               ))

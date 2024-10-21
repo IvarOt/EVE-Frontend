@@ -2,8 +2,22 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faSortAlphaAsc, faSortNumericAsc, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import UploadExcelPopup from '../components/UploadExcelPopup';
-import { api } from '../API/api';
+import { useNavigate } from "react-router-dom";
+import { getFiles, renameFile, deleteFile } from '../Services/FileService';
 
+export function File({ file }) {
+  const navigate = useNavigate();
+  const loadProductPage = () => {
+    navigate("/productpage", {state: { file }});
+  }
+  return (
+    <div>
+      <button onClick={loadProductPage}>
+        {file.name}
+      </button>
+    </div>
+  )
+}
 
 function Dashboard() {
   const [dropdownOpen, setDropdownOpen] = useState(null);
@@ -11,7 +25,7 @@ function Dashboard() {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [renameFileId, setRenameFileId] = useState(null);
   const [newFileName, setNewFileName] = useState('');
-  const [loading, setLoading] = useState(false);
+  const loading = null;
   const dropdownRef = useRef(null);
 
   const toggleDropdown = (index) => {
@@ -31,7 +45,7 @@ function Dashboard() {
     if (!newFileName) return;
 
     try {
-      const response = await api.renameFile(fileId, newFileName);
+      const response = await renameFile(fileId, newFileName);
 
       if (response.ok) {
         setFiles((prevFiles) =>
@@ -48,39 +62,16 @@ function Dashboard() {
     }
   };
 
-  const handleClickOutside = (event) => {
-    if (dropdownRefs.current.some(ref => ref && !ref.contains(event.target))) {
-      setDropdownOpen(null);
-    }
-  };
 
   const fetchFiles = async () => {
-    setLoading(true);
-    try {
-      const response = await api.getFiles();
-      if (response.ok) {
-        const data = await response.json();
-        setFiles(data);
-      } else {
-        console.error('Error fetching files');
-      }
-    } catch (error) {
-      console.error('Error fetching files', error);
-    } finally {
-      setLoading(false);
-    }
+    const files = await getFiles();
+    setFiles(files);
   };
 
   useEffect(() => {
     fetchFiles();
   }, []);
 
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   const handleSelectFile = (fileId) => {
     setSelectedFiles((prevSelectedFiles) =>
@@ -96,7 +87,7 @@ function Dashboard() {
 
     try {
       for (const fileId of selectedFiles) {
-        const response = await api.deleteFile(fileId);
+        const response = await deleteFile(fileId);
 
         if (response.ok) {
           setFiles((prevFiles) => prevFiles.filter((file) => file.id !== fileId));
@@ -140,7 +131,7 @@ function Dashboard() {
                 </div>
               </div>
             ) : (
-              <table className="table table-auto table-hover align-middle">
+              <table className="table table-auto align-middle">
                 <thead>
                   <tr>
                     <th scope="col">
@@ -159,7 +150,7 @@ function Dashboard() {
                   {files.length > 0 ? (
                     files.map((file, index) => (
                       <tr key={file.id}>
-                        <td>
+                        <td >
                           <input
                             type="checkbox"
                             className="me-2"
@@ -167,8 +158,8 @@ function Dashboard() {
                             onChange={() => handleSelectFile(file.id)}
                           />
                         </td>
-                        <td>
-                          {renameFileId === file.id ? (
+                        {renameFileId === file.id ? (
+                          <td className='h-75'>
                             <input
                               type="text"
                               value={newFileName}
@@ -180,10 +171,12 @@ function Dashboard() {
                               autoFocus
                               className="form-control"
                             />
-                          ) : (
-                            file.name
-                          )}
-                        </td>
+                          </td>
+                        ) : (
+                          <td>
+                            <File file={ file } ></File>
+                          </td>
+                        )}
                         <td>{new Date(file.lastUpdated).toLocaleDateString()}</td>
                         <td className="d-flex justify-content-end">
                           <div className="dropdown" ref={dropdownRef}>

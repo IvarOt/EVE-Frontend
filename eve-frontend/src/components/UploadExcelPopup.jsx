@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
-import { api } from '../API/api';
+import { uploadFile } from "../Services/FileService";
 
 function UploadExcelPopup({ onFileUploaded }) {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -39,13 +39,13 @@ function UploadExcelPopup({ onFileUploaded }) {
     fileInputRef.current.click();
   };
 
-  const uploadFile = async () => {
+  const handleUploadFile = async () => {
     if (selectedFile) {
       const formData = new FormData();
       formData.append("file", selectedFile);
 
       try {
-        const response = await api.uploadFile(formData);
+        const response = await uploadFile(formData);
         if (response.ok) {
           console.log("File uploaded successfully");
           handleClose();
@@ -56,7 +56,6 @@ function UploadExcelPopup({ onFileUploaded }) {
         }
       } catch (error) {
         console.error("Error uploading file:", error);
-        alert("An error occurred while uploading the file");
       }
     } else {
       alert("No file selected for upload");
@@ -121,7 +120,7 @@ function UploadExcelPopup({ onFileUploaded }) {
                 Close
               </button>
 
-              <button type="button" className="btn btn-primary flex-grow-1" onClick={uploadFile}>
+              <button type="button" className="btn btn-primary flex-grow-1" onClick={handleUploadFile}>
                 Upload
               </button>
             </div>
