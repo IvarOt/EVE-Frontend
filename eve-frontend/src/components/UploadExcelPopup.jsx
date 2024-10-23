@@ -87,7 +87,7 @@ export default function UploadExcelPopup({ uploadFile, isLoading }) {
               <p>Click the button below to upload an Excel file</p>
               <div className="upload-section d-flex justify-content-center align-items-center p-4 rounded">
                 <div className="text-center">
-                  <button type="button" className="btn" onClick={triggerFileInput}>
+                  <button type="button" className="btn" onClick={triggerFileInput} disabled={isLoading}>
                     <i className="fa-solid fa-upload"></i>
                     <p className="icon-text m-t-5 fs-6">{selectedFileName || "Select Excel File"}</p>
                   </button>
